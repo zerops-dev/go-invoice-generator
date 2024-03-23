@@ -42,6 +42,12 @@ func (d *Document) SetNotes(notes string) *Document {
 	return d
 }
 
+// SetTaxAmountCzkNote of document
+func (d *Document) SetTaxAmountCzkNote(val string) *Document {
+	d.TaxAmountCzkNote = val
+	return d
+}
+
 // SetCompany of document
 func (d *Document) SetCompany(company *Contact) *Document {
 	d.Company = company

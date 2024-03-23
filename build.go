@@ -218,7 +218,7 @@ func (doc *Document) drawsTableTitles() {
 	// Tax
 	doc.pdf.SetX(ItemColTaxOffset)
 	doc.pdf.CellFormat(
-		ItemColDiscountOffset-ItemColTaxOffset,
+		190-ItemColTaxOffset,
 		6,
 		doc.encodeString(doc.Options.TextItemsTaxTitle),
 		"0",
@@ -229,33 +229,35 @@ func (doc *Document) drawsTableTitles() {
 		"",
 	)
 
-	// Discount
-	doc.pdf.SetX(ItemColDiscountOffset)
-	doc.pdf.CellFormat(
-		ItemColTotalTTCOffset-ItemColDiscountOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsDiscountTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	/*
+		// Discount
+		doc.pdf.SetX(ItemColDiscountOffset)
+		doc.pdf.CellFormat(
+			ItemColTotalTTCOffset-ItemColDiscountOffset,
+			6,
+			doc.encodeString(doc.Options.TextItemsDiscountTitle),
+			"0",
+			0,
+			"",
+			false,
+			0,
+			"",
+		)
 
-	// TOTAL TTC
-	doc.pdf.SetX(ItemColTotalTTCOffset)
-	doc.pdf.CellFormat(
-		190-ItemColTotalTTCOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsTotalTTCTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+		// TOTAL TTC
+		doc.pdf.SetX(ItemColTotalTTCOffset)
+		doc.pdf.CellFormat(
+			190-ItemColTotalTTCOffset,
+			6,
+			doc.encodeString(doc.Options.TextItemsTotalTTCTitle),
+			"0",
+			0,
+			"",
+			false,
+			0,
+			"",
+		)
+	*/
 }
 
 // appendItems to document
@@ -300,11 +302,19 @@ func (doc *Document) appendNotes() {
 	doc.pdf.SetFont(doc.Options.Font, "", 9)
 	doc.pdf.SetX(BaseMargin)
 	doc.pdf.SetRightMargin(100)
-	doc.pdf.SetY(currentY + 10)
-
 	_, lineHt := doc.pdf.GetFontSize()
-	html := doc.pdf.HTMLBasicNew()
-	html.Write(lineHt, doc.encodeString(doc.Notes))
+
+	doc.pdf.SetY(currentY + 10)
+	{
+		html := doc.pdf.HTMLBasicNew()
+		html.Write(lineHt, doc.encodeString(doc.TaxAmountCzkNote))
+	}
+
+	doc.pdf.SetY(currentY + 15)
+	{
+		html := doc.pdf.HTMLBasicNew()
+		html.Write(lineHt, doc.encodeString(doc.Notes))
+	}
 
 	doc.pdf.SetRightMargin(BaseMargin)
 	doc.pdf.SetY(currentY)
@@ -424,7 +434,7 @@ func (doc *Document) appendTotal() {
 	doc.pdf.CellFormat(
 		40,
 		10,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Tax())),
+		doc.encodeString(fmt.Sprintf("%s (%s %%)", doc.ac.FormatMoneyDecimal(doc.Tax()), doc.DefaultTax.Percent)),
 		"0",
 		0,
 		"L",

@@ -200,85 +200,87 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 	)
 
 	// Discount
-	doc.pdf.SetX(ItemColDiscountOffset)
-	if i.Discount == nil {
-		doc.pdf.CellFormat(
-			ItemColTotalTTCOffset-ItemColDiscountOffset,
-			colHeight,
-			doc.encodeString("--"),
-			"0",
-			0,
-			"",
-			false,
-			0,
-			"",
-		)
-	} else {
-		// If discount
-		discountType, discountAmount := i.Discount.getDiscount()
-		var discountTitle string
-		var discountDesc string
-
-		dCost := i.TotalWithoutTaxAndWithoutDiscount()
-		if discountType == DiscountTypePercent {
-			discountTitle = fmt.Sprintf("%s %s", discountAmount, doc.encodeString("%"))
-
-			// get amount from percent
-			dAmount := dCost.Mul(discountAmount.Div(decimal.NewFromFloat(100)))
-			discountDesc = fmt.Sprintf("-%s", doc.ac.FormatMoneyDecimal(dAmount))
+	/*
+		doc.pdf.SetX(ItemColDiscountOffset)
+		if i.Discount == nil {
+			doc.pdf.CellFormat(
+				ItemColTotalTTCOffset-ItemColDiscountOffset,
+				colHeight,
+				doc.encodeString("--"),
+				"0",
+				0,
+				"",
+				false,
+				0,
+				"",
+			)
 		} else {
-			discountTitle = fmt.Sprintf("%s %s", discountAmount, doc.encodeString("€"))
+			// If discount
+			discountType, discountAmount := i.Discount.getDiscount()
+			var discountTitle string
+			var discountDesc string
 
-			// get percent from amount
-			dPerc := discountAmount.Mul(decimal.NewFromFloat(100))
-			dPerc = dPerc.Div(dCost)
-			discountDesc = fmt.Sprintf("-%s %%", dPerc.StringFixed(2))
+			dCost := i.TotalWithoutTaxAndWithoutDiscount()
+			if discountType == DiscountTypePercent {
+				discountTitle = fmt.Sprintf("%s %s", discountAmount, doc.encodeString("%"))
+
+				// get amount from percent
+				dAmount := dCost.Mul(discountAmount.Div(decimal.NewFromFloat(100)))
+				discountDesc = fmt.Sprintf("-%s", doc.ac.FormatMoneyDecimal(dAmount))
+			} else {
+				discountTitle = fmt.Sprintf("%s %s", discountAmount, doc.encodeString("€"))
+
+				// get percent from amount
+				dPerc := discountAmount.Mul(decimal.NewFromFloat(100))
+				dPerc = dPerc.Div(dCost)
+				discountDesc = fmt.Sprintf("-%s %%", dPerc.StringFixed(2))
+			}
+
+			// discount title
+			// lastY := doc.pdf.GetY()
+			doc.pdf.CellFormat(
+				ItemColTotalTTCOffset-ItemColDiscountOffset,
+				colHeight/2,
+				doc.encodeString(discountTitle),
+				"0",
+				0,
+				"LB",
+				false,
+				0,
+				"",
+			)
+
+			// discount desc
+			doc.pdf.SetXY(ItemColDiscountOffset, baseY+(colHeight/2))
+			doc.pdf.SetFont(doc.Options.Font, "", SmallTextFontSize)
+			doc.pdf.SetTextColor(
+				doc.Options.GreyTextColor[0],
+				doc.Options.GreyTextColor[1],
+				doc.Options.GreyTextColor[2],
+			)
+
+			doc.pdf.CellFormat(
+				ItemColTotalTTCOffset-ItemColDiscountOffset,
+				colHeight/2,
+				doc.encodeString(discountDesc),
+				"0",
+				0,
+				"LT",
+				false,
+				0,
+				"",
+			)
+
+			// reset font and y
+			doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
+			doc.pdf.SetTextColor(
+				doc.Options.BaseTextColor[0],
+				doc.Options.BaseTextColor[1],
+				doc.Options.BaseTextColor[2],
+			)
+			doc.pdf.SetY(baseY)
 		}
-
-		// discount title
-		// lastY := doc.pdf.GetY()
-		doc.pdf.CellFormat(
-			ItemColTotalTTCOffset-ItemColDiscountOffset,
-			colHeight/2,
-			doc.encodeString(discountTitle),
-			"0",
-			0,
-			"LB",
-			false,
-			0,
-			"",
-		)
-
-		// discount desc
-		doc.pdf.SetXY(ItemColDiscountOffset, baseY+(colHeight/2))
-		doc.pdf.SetFont(doc.Options.Font, "", SmallTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.GreyTextColor[0],
-			doc.Options.GreyTextColor[1],
-			doc.Options.GreyTextColor[2],
-		)
-
-		doc.pdf.CellFormat(
-			ItemColTotalTTCOffset-ItemColDiscountOffset,
-			colHeight/2,
-			doc.encodeString(discountDesc),
-			"0",
-			0,
-			"LT",
-			false,
-			0,
-			"",
-		)
-
-		// reset font and y
-		doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.BaseTextColor[0],
-			doc.Options.BaseTextColor[1],
-			doc.Options.BaseTextColor[2],
-		)
-		doc.pdf.SetY(baseY)
-	}
+	*/
 
 	// Tax
 	doc.pdf.SetX(ItemColTaxOffset)
@@ -362,18 +364,20 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 	}
 
 	// TOTAL TTC
-	doc.pdf.SetX(ItemColTotalTTCOffset)
-	doc.pdf.CellFormat(
-		190-ItemColTotalTTCOffset,
-		colHeight,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(i.TotalWithTaxAndDiscount())),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	/*
+		doc.pdf.SetX(ItemColTotalTTCOffset)
+		doc.pdf.CellFormat(
+			190-ItemColTotalTTCOffset,
+			colHeight,
+			doc.encodeString(doc.ac.FormatMoneyDecimal(i.TotalWithTaxAndDiscount())),
+			"0",
+			0,
+			"",
+			false,
+			0,
+			"",
+		)
+	*/
 
 	// Set Y for next line
 	doc.pdf.SetY(baseY + colHeight)
