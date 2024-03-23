@@ -1,16 +1,14 @@
-![golangci-lint](https://github.com/angelodlfrtr/go-invoice-generator/actions/workflows/golangci-lint.yml/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/angelodlfrtr/go-invoice-generator)](https://goreportcard.com/report/github.com/angelodlfrtr/go-invoice-generator)
-[![GoDoc](https://godoc.org/github.com/angelodlfrtr/go-invoice-generator?status.svg)](https://godoc.org/github.com/angelodlfrtr/go-invoice-generator)
-
 # Golang invoice generator
 
 A super fast golang package to generate invoices, delivery notes and quotations as pdf
 using https://github.com/go-pdf/fpdf.
 
+See the original project here https://github.com/angelodlfrtr/go-invoice-generator.
+
 ## Download from Github
 
 ```
-go get -u github.com/angelodlfrtr/go-invoice-generator
+go get -u github.com/zeropsio/go-invoice-generator
 ```
 
 ## Example output
@@ -26,7 +24,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	generator "github.com/angelodlfrtr/go-invoice-generator"
+	generator "github.com/zeropsio/go-invoice-generator"
 )
 
 func TestNew(t *testing.T) {

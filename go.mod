@@ -1,6 +1,6 @@
-module github.com/angelodlfrtr/go-invoice-generator
+module github.com/zeropsio/go-invoice-generator
 
-go 1.17
+go 1.22
 
 require (
 	github.com/creasty/defaults v1.6.0
