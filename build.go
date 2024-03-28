@@ -293,10 +293,6 @@ func (doc *Document) appendItems() {
 
 // appendNotes to document
 func (doc *Document) appendNotes() {
-	if len(doc.Notes) == 0 {
-		return
-	}
-
 	currentY := doc.pdf.GetY()
 
 	doc.pdf.SetFont(doc.Options.Font, "", 9)
@@ -310,10 +306,12 @@ func (doc *Document) appendNotes() {
 		html.Write(lineHt, doc.encodeString(doc.TaxAmountCzkNote))
 	}
 
-	doc.pdf.SetY(currentY + 15)
-	{
-		html := doc.pdf.HTMLBasicNew()
-		html.Write(lineHt, doc.encodeString(doc.Notes))
+	if len(doc.Notes) > 0 {
+		doc.pdf.SetY(currentY + 15)
+		{
+			html := doc.pdf.HTMLBasicNew()
+			html.Write(lineHt, doc.encodeString(doc.Notes))
+		}
 	}
 
 	doc.pdf.SetRightMargin(BaseMargin)
