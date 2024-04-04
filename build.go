@@ -54,8 +54,11 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	// Append company contact to doc
 	companyBottom := doc.Company.appendCompanyContactToDoc(doc)
 
-	// Append customer contact to doc
-	customerBottom := doc.Customer.appendCustomerContactToDoc(doc)
+	customerBottom := companyBottom
+	if doc.Customer != nil {
+		// Append customer contact to doc
+		customerBottom = doc.Customer.appendCustomerContactToDoc(doc)
+	}
 
 	if customerBottom > companyBottom {
 		doc.pdf.SetXY(10, customerBottom)
