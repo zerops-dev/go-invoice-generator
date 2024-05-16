@@ -8,7 +8,7 @@ See the original project here https://github.com/angelodlfrtr/go-invoice-generat
 ## Download from Github
 
 ```
-go get -u github.com/zeropsio/go-invoice-generator
+go get -u github.com/zerops-dev/go-invoice-generator
 ```
 
 ## Example output
@@ -24,7 +24,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	generator "github.com/zeropsio/go-invoice-generator"
+	generator "github.com/zerops-dev/go-invoice-generator"
 )
 
 func TestNew(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/zeropsio/go-invoice-generator
+module github.com/zerops-dev/go-invoice-generator
 
 go 1.22
 
