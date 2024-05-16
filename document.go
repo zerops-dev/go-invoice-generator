@@ -18,7 +18,7 @@ type Document struct {
 	Version          string        `json:"version,omitempty" validate:"max=32"`
 	ClientRef        string        `json:"client_ref,omitempty" validate:"max=64"`
 	Description      string        `json:"description,omitempty" validate:"max=1024"`
-	Notes            string        `json:"notes,omitempty"`
+	Notes            []string      `json:"notes,omitempty"`
 	Company          *Contact      `json:"company,omitempty" validate:"required"`
 	Customer         *Contact      `json:"customer,omitempty"`
 	Items            []*Item       `json:"items,omitempty"`

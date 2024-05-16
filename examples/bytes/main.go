@@ -32,7 +32,7 @@ func main() {
 	doc.SetVersion("someversion")
 
 	doc.SetDescription("A description àç")
-	doc.SetNotes("I léove croissant cotton candy.")
+	doc.AddNote("I léove croissant cotton candy.")
 
 	doc.SetDate("02/03/2021")
 	doc.SetPaymentTerm("02/04/2021")

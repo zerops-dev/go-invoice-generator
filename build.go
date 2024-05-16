@@ -301,6 +301,8 @@ func (doc *Document) appendNotes() {
 	doc.pdf.SetFont(doc.Options.Font, "", 9)
 	doc.pdf.SetX(BaseMargin)
 	doc.pdf.SetRightMargin(100)
+
+	const lineApproxRuneLen int = 65
 	_, lineHt := doc.pdf.GetFontSize()
 
 	doc.pdf.SetY(currentY + 10)
@@ -309,12 +311,16 @@ func (doc *Document) appendNotes() {
 		html.Write(lineHt, doc.encodeString(doc.TaxAmountCzkNote))
 	}
 
-	if len(doc.Notes) > 0 {
-		doc.pdf.SetY(currentY + 15)
+	var lineCount int
+	for i := 1; len(doc.Notes) >= i; i++ {
+		text := doc.Notes[i-1]
+		// base Y + lineHt between each note + count line offset + 10+lineHt to offset from doc.TaxAmountCzkNote
+		doc.pdf.SetY(currentY + float64(i)*lineHt + float64(lineCount)*lineHt + (10 + lineHt))
 		{
 			html := doc.pdf.HTMLBasicNew()
-			html.Write(lineHt, doc.encodeString(doc.Notes))
+			html.Write(lineHt, doc.encodeString(text))
 		}
+		lineCount += (len([]rune(text)) / lineApproxRuneLen) + 1
 	}
 
 	doc.pdf.SetRightMargin(BaseMargin)

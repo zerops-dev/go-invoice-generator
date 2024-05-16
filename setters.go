@@ -36,9 +36,9 @@ func (d *Document) SetDescription(desc string) *Document {
 	return d
 }
 
-// SetNotes of document
-func (d *Document) SetNotes(notes string) *Document {
-	d.Notes = notes
+// AddNote of document
+func (d *Document) AddNote(note string) *Document {
+	d.Notes = append(d.Notes, note)
 	return d
 }
 
